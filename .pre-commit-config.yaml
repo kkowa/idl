@@ -1,0 +1,33 @@
+exclude: |
+  (?x)(
+    .git
+    | (openapi|graphql|grpc)/generated/(.*)
+  )
+
+default_stages: [commit]
+fail_fast: true
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+
+  - repo: https://github.com/yoheimuta/protolint
+    rev: v0.41.0
+    hooks:
+      - id: protolint-docker
+        args: [-fix]
+
+  # https://github.com/daveshanley/vacuum
+  # NOTE: vacuum currently not supports Docker-based hook and tags are not maintained well.
+  - repo: local
+    hooks:
+      - id: vacuum-docker
+        name: Lint OpenAPI specification with vacuum
+        language: docker_image
+        files: ^openapi/schemas/.*/openapi\.json$
+        entry: dshanley/vacuum:main lint
+        args: [--details, --time]
