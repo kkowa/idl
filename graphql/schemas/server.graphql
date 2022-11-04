@@ -189,7 +189,7 @@ type Subscription {
 type User implements Node {
   id: GlobalID!
 
-  """150자 이하 문자, 숫자 그리고 @/./+/-/_만 가능합니다."""
+  """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."""
   username: String!
 
   """User's real name."""

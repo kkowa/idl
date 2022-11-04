@@ -28,6 +28,6 @@ repos:
       - id: vacuum-docker
         name: Lint OpenAPI specification with vacuum
         language: docker_image
-        files: ^openapi/schemas/.*/openapi\.json$
+        files: \.openapi\.json$
         entry: dshanley/vacuum:main lint
         args: [--details, --time]
